@@ -9,9 +9,12 @@ cloudinaryV2.config({
 })
 
 const handleUpload = async(file:string) => {
-    const res = await cloudinaryV2.uploader.upload(file, {
-        resource_type: "auto"
-    })
+    const res = await cloudinaryV2.uploader.upload(file,
+        {
+            folder: 'Test'
+        },
+        (result) => result
+    )
     
     return res
 }

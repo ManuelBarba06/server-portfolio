@@ -1,4 +1,7 @@
 import express, { Application, json } from 'express';
+import fileUpload from 'express-fileupload'
+
+import contactRoutes from './contact/contact.route'
 
 class Server {
     private app: Application
@@ -17,9 +20,20 @@ class Server {
         //Allow receive jsons in server
         this.app.use(json())
         
+        this.app.use(
+            fileUpload({
+                useTempFiles: true
+            })
+        )
+        
         //Set server port
         this.port = process.env.PORT || '4000'
         
+        this.routes()
+    }
+    
+    routes(){
+        this.app.use(`${this.PATH}${this.apiPaths.contact}`, contactRoutes)
     }
     
     listen() {
